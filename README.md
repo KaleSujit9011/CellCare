@@ -66,59 +66,31 @@ This replaces heuristic degradation models with **data-driven physics learning**
 ## 📁 Repository Structure
 
 ```
-
-batteryguard-ai/
+battery_degradation/
 │
 ├── data/
-│   ├── raw/
-│   │   └── battery_data.csv
-│   │
-│   ├── processed/
-│   │   ├── cycles.csv
-│   │   ├── stress_features.csv
-│   │   └── capacity_fade.csv
-│
-├── preprocessing/
-│   ├── signal_cleaning.py
-│   ├── cycle_extraction.py
-│   └── derivatives.py
-│
-├── features/
-│   └── load_shape_features.py
-│
-├── models/
-│   ├── degradation_ml.py
-│   ├── anomaly_models.py
-│   ├── rul_models.py
-│   └── stress_deeponet.py
-│
-├── xai/
-│   ├── shap_analysis.py
-│   └── stress_attribution.py
-│
-├── safety/
-│   ├── early_warning.py
-│   └── risk_scoring.py
-│
-├── analytics/
-│   ├── cell_pack_loss.py
-│   └── reporting.py
-│
-├── chatbot/
-│   └── assistant.py
-│
-├── app/
-│   └── streamlit_app.py
+│   └── B0005.mat              # your raw dataset
 │
 ├── notebooks/
-│   └── green_ai_project.ipynb
+│   └── exploration.ipynb      # for testing and exploring
 │
-├── main.py
-├── config.yaml
-├── requirements.txt
-├── .gitignore
-└── README.md
-
+├── src/
+│   ├── data_loader.py         # loading and parsing .mat file
+│   ├── preprocessing.py       # cleaning, feature engineering
+│   ├── features.py            # dI/dt, C1-C4 extraction
+│   ├── models.py              # ML models + DeepONet
+│   └── utils.py               # helper functions
+│
+├── backend/
+│   └── main.py                # FastAPI app
+│
+├── frontend/
+│   └── src/                   # React app
+│
+├── outputs/
+│   └── plots/                 # saved visualizations
+│
+└── requirements.txt           # all dependencies
 ````
 
 Each module maps directly to a conceptual block in the modeling pipeline.

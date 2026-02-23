@@ -1,0 +1,8 @@
+scipy
+numpy
+pandas
+matplotlib
+scikit-learn
+fastapi
+uvicorn
+torch
