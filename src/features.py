@@ -3,8 +3,6 @@ import numpy as np
 import scipy.io as sio
 from scipy.stats import skew, kurtosis
 
-from data_loader import load_mat , extract_discharge_cycles
-
 def compute_didt(current, time):
     didt = np.diff(current)/np.diff(time)
     return didt
@@ -19,6 +17,7 @@ def compute_load_features(current, time):
     return C1,C2,C3,C4
 
 if __name__ == "__main__":
+    from data_loader import load_mat #only for testing
     mat = load_mat("data/raw/B0005.mat")
     battery = mat['B0005']
     cycles = battery[0,0]
