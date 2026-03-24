@@ -1,8 +1,12 @@
+
 scipy
 numpy
 pandas
 matplotlib
+torch
 scikit-learn
+xgboost
+joblib
 fastapi
 uvicorn
-torch
+pydantic

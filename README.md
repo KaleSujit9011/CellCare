@@ -64,7 +64,6 @@ This replaces heuristic degradation models with **data-driven physics learning**
 ---
 
 ## 📁 Repository Structure
-
 ```
 battery_degradation/
 │
@@ -80,6 +79,11 @@ battery_degradation/
 │   ├── features.py            # dI/dt, C1-C4 extraction
 │   ├── models.py              # ML models + DeepONet
 │   └── utils.py               # helper functions
+│
+├── models/
+│   └── saved/
+│       ├── rf_model.pkl
+│       └── xgb_model.pkl
 │
 ├── backend/
 │   └── main.py                # FastAPI app
