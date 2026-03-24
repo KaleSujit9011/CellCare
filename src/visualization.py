@@ -13,8 +13,8 @@ def plot_stress_features(df):
 
     plt.suptitle('Stress features Over Cycle')
     plt.tight_layout()
-    # plt.show()
     plt.savefig('../outputs/plots/stress_features_curves.png')
+    plt.show()
 
 def plot_degradation(df):
     plt.figure()
@@ -23,9 +23,9 @@ def plot_degradation(df):
     plt.ylabel('Capacity(Ah)')
     plt.title('Battery Degradation Curve')
     plt.axhline(y=1.4, color='r', linestyle='--', label='End of Life (1.4Ah)')
-    # plt.show()
     plt.legend()
     plt.savefig('../outputs/plots/degradation_curve.png')
+    plt.show()
 
 
 def plot_rul(df):
@@ -34,9 +34,9 @@ def plot_rul(df):
     plt.xlabel('cycle_number')
     plt.ylabel('RUL')
     plt.title('Battery RUL')
-    # plt.show()
     plt.legend()
     plt.savefig('../outputs/plots/rul_curve.png')
+    plt.show()
 
 def plot_stress_distribution(df):
     counts = df['stress_level'].value_counts()
@@ -45,13 +45,10 @@ def plot_stress_distribution(df):
     plt.xlabel('Stress Level')
     plt.ylabel('Number of cycles')
     plt.title(' Stress Level Distribution ')
-    # plt.show()
     plt.savefig('../outputs/plots/stress_distribution_curve.png')
+    plt.show()
 
 if __name__ == "__main__":
-    # from data_loader import load_mat, extract_discharge_cycles
-    # mat = load_mat("data/raw/B0005.mat")
-    # df = extract_discharge_cycles(mat)
     df = pd.read_csv('../data/processed/battery_features.csv')
     print(df.head())
     print(df.info())
