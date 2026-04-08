@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Data files
+data/raw/
+data/processed/
+
+# Trained models
+models/saved/
+
+# Environment
+.env
+
+# IDE
+.idea/
+.vscode/
+
+# Outputs
+outputs/plots/
+
+# Jupyter
+.ipynb_checkpoints/
