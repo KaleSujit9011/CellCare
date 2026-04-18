@@ -1,12 +1,11 @@
-
 scipy
 numpy
 pandas
 matplotlib
-torch
+seaborn
 scikit-learn
 xgboost
 joblib
 fastapi
 uvicorn
-pydantic
+python-multipart
