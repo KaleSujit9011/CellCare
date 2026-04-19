@@ -301,4 +301,4 @@ lithium-ion battery degradation modeling by:
 **If you find this project useful, consider starring the repository.**
 
 ```
-
+![GitHub issues](https://img.shields.io/github/issues/KaleSujit9011/Green-Skills-AI-Internship-Project)
