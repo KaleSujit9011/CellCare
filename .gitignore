@@ -25,3 +25,9 @@ outputs/plots/
 
 # Jupyter
 .ipynb_checkpoints/
+
+# React/Vite
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local

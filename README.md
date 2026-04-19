@@ -12,7 +12,7 @@ much.
 
 ---
 
-## 🔬 Project Motivation
+##  Project Motivation
 
 Traditional battery aging models assume:
 
@@ -35,7 +35,7 @@ This project introduces a **Stress Functional Learning Framework** that:
 
 ---
 
-## 🎯 Objectives
+##  Objectives
 
 - Replace cycle counting with stress-based degradation modeling  
 - Learn degradation physics directly from data  
@@ -45,7 +45,7 @@ This project introduces a **Stress Functional Learning Framework** that:
 
 ---
 
-## 🧠 Core Concept: Stress as a Functional
+##  Core Concept: Stress as a Functional
 
 Battery degradation is modeled as a functional:
 
@@ -68,7 +68,10 @@ This replaces heuristic degradation models with **data-driven physics learning**
 battery_degradation/
 │
 ├── data/
-│   └── B0005.mat              # your raw dataset
+│   └── raw/
+│         └── B0005.mat # your raw dataset
+│   └── processed/
+│         └── B0005.csv # your processed dataset
 │
 ├── notebooks/
 │   └── exploration.ipynb      # for testing and exploring
@@ -101,7 +104,7 @@ Each module maps directly to a conceptual block in the modeling pipeline.
 
 ---
 
-## 📊 Dataset Description
+##  Dataset Description
 
 ### Real Battery Data (EV Lab)
 
@@ -126,7 +129,7 @@ Used when real data is incomplete:
 
 ---
 
-## 🔧 Data Preprocessing
+##  Data Preprocessing
 
 - Missing value handling  
 - Time-series resampling  
@@ -137,7 +140,7 @@ Used when real data is incomplete:
 
 ---
 
-## ⚙️ Feature Engineering: Load Shape Toxicity
+## ️ Feature Engineering: Load Shape Toxicity
 
 Each cycle is summarized using four physically meaningful coefficients:
 
@@ -152,7 +155,7 @@ These features power both ML models and interpretability analysis.
 
 ---
 
-## 📈 Exploratory Data Analysis (EDA)
+##  Exploratory Data Analysis (EDA)
 
 - Correlation heatmaps  
 - Stress vs capacity plots  
@@ -165,7 +168,7 @@ energy throughput alone.
 
 ---
 
-## 🤖 Machine Learning Models
+##  Machine Learning Models
 
 ### Regression (Capacity Fade Prediction)
 
@@ -180,7 +183,7 @@ energy throughput alone.
 
 ---
 
-## 🧬 Deep Learning: Neural Operator (DeepONet)
+##  Deep Learning: Neural Operator (DeepONet)
 
 ### Why DeepONet?
 
@@ -210,7 +213,7 @@ This enforces:
 
 ---
 
-## 🛡 Stress & Safety Modeling
+##  Stress & Safety Modeling
 
 For each cycle:
 
@@ -224,39 +227,17 @@ Thresholds use percentile-based stress limits.
 
 ---
 
-## 💬 AI Chatbot Interface
-
-A lightweight analytics chatbot enables natural-language queries:
-
-Examples:
-
-- “What is the mean stress?”  
-- “Which cycles are dangerous?”  
-- “Show stress vs capacity plot”  
-- “Cluster-wise statistics”  
-
-Demonstrates AI-powered battery analytics.
-
----
-
-## 🌐 Streamlit Research Dashboard
-
-An interactive dashboard allows:
-
-- Dataset upload  
-- Stress visualization  
-- Safe vs dangerous cycle identification  
-- Capacity fade & RUL insights  
-
-Run locally:
-
+## React vite-
 ```bash
-streamlit run app/streamlit_app.py
+npm create vite
+npm install
+cd  frontend
+npm run dev
 ````
 
 ---
 
-## 🧪 Tech Stack
+##  Tech Stack
 
 ### Programming & Data
 
@@ -270,22 +251,15 @@ streamlit run app/streamlit_app.py
 
 * Scikit-learn
 * Random Forest
-* SVR
-* KMeans
+* XGBoost
 
 ### Deep Learning
 
 * PyTorch
-* Neural Operators (DeepONet)
-
-### AI / NLP
-
-* Rule-based chatbot
-* GPT-style extensibility
 
 ---
 
-## 🔍 Key Findings
+##  Key Findings
 
 * Battery stress is **path-dependent**, not cycle-dependent
 * High dI/dt causes disproportionate damage
@@ -295,7 +269,7 @@ streamlit run app/streamlit_app.py
 
 ---
 
-## 🚀 Applications
+##  Applications
 
 * Electric Vehicle Battery Management Systems (BMS)
 * Smart charging optimization
@@ -306,7 +280,7 @@ streamlit run app/streamlit_app.py
 
 ---
 
-## 🔮 Future Work
+##  Future Work
 
 * Multi-physics coupling (thermal + electrochemical)
 * Transformer-based sequence models
@@ -315,7 +289,7 @@ streamlit run app/streamlit_app.py
 
 ---
 
-## ⭐ Final Note
+##  Final Note
 
 This project demonstrates a **next-generation AI framework** for
 lithium-ion battery degradation modeling by:
