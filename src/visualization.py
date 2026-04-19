@@ -42,13 +42,16 @@ def plot_rul(df):
 
 def plot_stress_distribution(df):
     counts = df['stress_level'].value_counts()
-    plt.bar(counts.index , counts.values)
     plt.figure()
+    for level, value in counts.items():
+        plt.bar(level, value, label=level)  # each bar gets its own label
     plt.xlabel('Stress Level')
     plt.ylabel('Number of cycles')
-    plt.title(' Stress Level Distribution ')
+    plt.title('Stress Level Distribution')
+    plt.legend()
     plt.savefig('../outputs/plots/stress_distribution_curve.png')
     plt.show()
+
 
 def plot_actual_vs_predicted(y_test, y_pred, model_name):
     plt.figure()
@@ -72,7 +75,7 @@ def plot_feature_importance(model, feature_names, model_name):
     )
     plt.title(f'Feature Importance - {model_name}')
     plt.xlabel('Importance Score')
-    plt.savefig(f'../outputs/plots/feature_importance{model_name}.png')
+    plt.savefig(f'../outputs/plots/feature_importance_{model_name}.png')
 
 
 def plot_correlation_heatmap(df):

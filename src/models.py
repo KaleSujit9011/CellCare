@@ -58,7 +58,7 @@ if __name__ == "__main__":
     plot_actual_vs_predicted(y_test, y_predrf, 'RandomForest')
     plot_actual_vs_predicted(y_test, y_predxg, 'XGBoost')
     features = ['C1', 'C2', 'C3', 'C4', 'min_voltage']
-    plot_feature_importance(rf_model, features,'Random Forest')
+    plot_feature_importance(rf_model, features,'Random_Forest')
     plot_feature_importance(xgb_model, features,'XGBoost')
     plot_model_comparison(mae_rf, r2_rf, mae_xg, r2_xg)
 

@@ -1,7 +1,7 @@
 from fastapi import FastAPI,HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.schemas  import BatteryInput, PredictionOutput
+from schemas  import BatteryInput, PredictionOutput
 from fastapi.responses import FileResponse
 import numpy as np
 
