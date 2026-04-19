@@ -1,18 +1,27 @@
 from fastapi import FastAPI,HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
-from schemas  import BatteryInput, PredictionOutput
+import joblib
+import os,sys
+
+from schemas  import BatteryInput, PredictionOutput , SequencePredictionOutput
 from fastapi.responses import FileResponse
+from typing import List
 import numpy as np
 
-import joblib
-import os
+import torch
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
+from models import LSTMModel
+# from src.models import LSTMModel
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 rf_model = joblib.load(os.path.join(BASE_DIR, 'models', 'saved', 'rf_model.pkl'))
 xgb_model = joblib.load(os.path.join(BASE_DIR, 'models', 'saved', 'xgb_model.pkl'))
-print("Models loaded successfully!")
 
+lstm_model = LSTMModel(input_size=5, hidden_size=64, num_layers=2, forecast=10)
+lstm_model.load_state_dict(torch.load(os.path.join(BASE_DIR, 'models', 'saved', 'lstm_model.pth')))
+lstm_model.eval()
+print("models loaded successfully!")
 app = FastAPI(title="Battery Degradation API")
 
 # allows React frontend to talk to this API
@@ -74,3 +83,22 @@ def predict(data: BatteryInput):
         health_status=health_status
     )
 
+@app.post("/predict_sequence", response_model=SequencePredictionOutput)
+def predict_sequence(data: List[BatteryInput]):
+    # Expecting 10 cycles of data
+    if len(data) != 10:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=400, detail="Need exactly 10 cycles of data")
+
+    # Prepare input
+    features = np.array([[d.C1, d.C2, d.C3, d.C4, d.min_voltage] for d in data])
+    features_tensor = torch.FloatTensor(features).unsqueeze(0)  # Add batch dimension
+
+    # Predict
+    with torch.no_grad():
+        predictions = lstm_model(features_tensor).squeeze().tolist()
+
+    return SequencePredictionOutput(
+        predicted_capacities=[round(p, 4) for p in predictions],
+        cycles_ahead=10
+    )

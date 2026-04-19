@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import List
 
 class BatteryInput(BaseModel):
     C1: float
@@ -12,3 +13,7 @@ class PredictionOutput(BaseModel):
     RUL: int
     stress_level: str
     health_status: str
+
+class SequencePredictionOutput(BaseModel):
+    predicted_capacities: List[float]
+    cycles_ahead: int
