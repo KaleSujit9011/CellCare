@@ -1,4 +1,4 @@
-from fastapi import FastAPI,HTTPException
+from fastapi import FastAPI,HTTPException , UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 
 import joblib
@@ -8,6 +8,8 @@ from schemas  import BatteryInput, PredictionOutput , SequencePredictionOutput
 from fastapi.responses import FileResponse
 from typing import List
 import numpy as np
+import pandas as pd
+import io
 
 import torch
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
@@ -102,3 +104,63 @@ def predict_sequence(data: List[BatteryInput]):
         predicted_capacities=[round(p, 4) for p in predictions],
         cycles_ahead=10
     )
+
+
+
+@app.post("/predict_csv")
+async def predict_csv(file: UploadFile = File(...)):
+    try:
+        # Read uploaded CSV
+        contents = await file.read()
+        df = pd.read_csv(io.StringIO(contents.decode('utf-8')))
+
+        # Validate required columns
+        required = ['C1', 'C2', 'C3', 'C4', 'min_voltage']
+        if not all(col in df.columns for col in required):
+            from fastapi import HTTPException
+            raise HTTPException(status_code=400, detail=f"CSV must have columns: {required}")
+
+        # Get first row features
+        features = np.array([[
+            df['C1'].iloc[0],
+            df['C2'].iloc[0],
+            df['C3'].iloc[0],
+            df['C4'].iloc[0],
+            df['min_voltage'].iloc[0]
+        ]])
+
+        # Predict capacity
+        capacity = float(rf_model.predict(features)[0])
+
+        # Calculate RUL
+        eol_capacity = 1.4
+        RUL = max(0, int((capacity - eol_capacity) * 200))
+
+        # Determine stress level
+        c1_abs = abs(df['C1'].iloc[0])
+        if c1_abs < 0.000027:
+            stress_level = "low"
+        elif c1_abs < 0.000035:
+            stress_level = "medium"
+        else:
+            stress_level = "high"
+
+        # Determine health status
+        if capacity >= 1.6:
+            health_status = "Safe"
+        elif capacity >= 1.4:
+            health_status = "Warning"
+        else:
+            health_status = "Dangerous"
+
+        return {
+            "capacity": round(capacity, 4),
+            "RUL": RUL,
+            "stress_level": stress_level,
+            "health_status": health_status,
+            "filename": file.filename
+        }
+
+    except Exception as e:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=500, detail=str(e))

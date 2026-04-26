@@ -156,8 +156,6 @@ const styles = {
   },
   predictionValue: {
   padding: '0.2rem',
-  // backgroundColor: '#ecf0f1',
-  // borderRadius: '5px',
   textAlign: 'center',
   fontSize: '14px',
   }
