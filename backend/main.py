@@ -164,3 +164,59 @@ async def predict_csv(file: UploadFile = File(...)):
     except Exception as e:
         from fastapi import HTTPException
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/predict_sequence_csv")
+async def predict_sequence_csv(file: UploadFile = File(...)):
+    """
+    Takes a CSV with 10+ rows of battery data
+    Uses LSTM to predict next 10 cycles of capacity
+    """
+    try:
+        contents = await file.read()
+        
+        df = pd.read_csv(io.StringIO(contents.decode('utf-8')))
+        
+        # Validate: need at least 10 rows for LSTM input
+        if len(df) < 10:
+            # If CSV has fewer than 10 rows, can't create sequence
+            from fastapi import HTTPException
+            raise HTTPException(
+                status_code=400,
+                detail=f"Need at least 10 rows of data. Your file has {len(df)} rows."
+            )
+
+        # Validate: check required columns exist
+        required = ['C1', 'C2', 'C3', 'C4', 'min_voltage']
+        if not all(col in df.columns for col in required):
+            # all() returns True only if every column in 'required' exists in df.columns
+            from fastapi import HTTPException
+            raise HTTPException(status_code=400, detail=f"CSV must have columns: {required}")
+
+        # Take first 10 rows and extract features
+        features = df[required].iloc[:10].values
+        
+        # Convert to PyTorch tensor
+        features_tensor = torch.FloatTensor(features).unsqueeze(0)
+        
+        # Get LSTM predictions
+        lstm_model.eval()
+        
+        with torch.no_grad():
+        
+            predictions = lstm_model(features_tensor).squeeze().tolist()
+        
+        return {
+            "predicted_capacities": [round(p, 4) for p in predictions],
+        
+            "cycles_ahead": 10,
+        
+            "rows_used": 10,
+        
+            "filename": file.filename
+        }
+
+    except Exception as e:
+        # Catch any unexpected errors
+        from fastapi import HTTPException
+        raise HTTPException(status_code=500, detail=str(e))
+        

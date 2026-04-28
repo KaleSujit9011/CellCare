@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 
-function FileUpload({ setPredictionData }) {
+function FileUpload({setPredictionData}) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [selectedFile, setSelectedFile] = useState(null)
-
+  
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0])
     setError(null)
@@ -24,11 +24,23 @@ function FileUpload({ setPredictionData }) {
       const formData = new FormData()
       formData.append('file', selectedFile)
       
-      const response = await axios.post('http://localhost:8000/predict_csv', formData, {
+      const singleResponse = await axios.post('http://localhost:8000/predict_csv', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
       
-      setPredictionData(response.data)
+      setPredictionData(singleResponse.data)
+      try {
+        const sequenceResponse = await axios.post('http://localhost:8000/predict_sequence_csv', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        })
+        setPredictionData(prev => ({
+          ...prev,
+          sequencePrediction: sequenceResponse.data
+        }))
+      
+      } catch (seqErr) {
+        console.log('Sequence prediction not available:', seqErr.response?.data?.detail)
+      }
     } catch (err) {
       setError(err.response?.data?.detail || 'Failed to upload file. Make sure it has the required columns.')
     } finally {
@@ -93,12 +105,13 @@ function FileUpload({ setPredictionData }) {
       </button>
       
       {error && <p style={styles.error}>{error}</p>}
+
     </div>
   )
 }
 
 const styles = {
-
+  
   container: {
     textAlign: 'center',
     margin: '30px 0',

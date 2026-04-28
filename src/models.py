@@ -10,7 +10,7 @@ import torch.nn as nn
 
 import joblib
 import os
-
+    
 
 class LSTMModel(nn.Module):
     def __init__(self, input_size=5, hidden_size=64, num_layers=2, forecast=10):
