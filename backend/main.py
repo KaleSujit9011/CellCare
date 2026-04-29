@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import joblib
 import os,sys
 
-from schemas  import BatteryInput, PredictionOutput , SequencePredictionOutput
+from .schemas  import BatteryInput, PredictionOutput , SequencePredictionOutput
 from fastapi.responses import FileResponse
 from typing import List
 import numpy as np
