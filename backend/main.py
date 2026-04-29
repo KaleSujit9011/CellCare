@@ -21,15 +21,26 @@ rf_model = joblib.load(os.path.join(BASE_DIR, 'models', 'saved', 'rf_model.pkl')
 xgb_model = joblib.load(os.path.join(BASE_DIR, 'models', 'saved', 'xgb_model.pkl'))
 
 lstm_model = LSTMModel(input_size=5, hidden_size=64, num_layers=2, forecast=10)
-lstm_model.load_state_dict(torch.load(os.path.join(BASE_DIR, 'models', 'saved', 'lstm_model.pth')))
+lstm_model.load_state_dict(
+    torch.load(
+        os.path.join(BASE_DIR, 'models', 'saved', 'lstm_model.pth'),
+        map_location=torch.device('cpu'),  # Render has no GPU; prevents CUDA tensor errors
+        weights_only=True                  # Suppress FutureWarning in PyTorch >= 2.0
+    )
+)
 lstm_model.eval()
 print("models loaded successfully!")
 app = FastAPI(title="Battery Degradation API")
 
+# Read frontend URL from environment variable (set this in Render dashboard)
+# Falls back to localhost for local development
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
+
 # allows React frontend to talk to this API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[FRONTEND_URL],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )

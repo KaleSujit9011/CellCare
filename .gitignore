@@ -11,8 +11,8 @@ data/raw/
 data/processed/
 data/demo/
 
-# Trained models
-models/saved/
+# # Trained models
+# models/saved/
 
 # Environment
 .env
@@ -22,7 +22,7 @@ models/saved/
 .vscode/
 
 # Outputs
-outputs/plots/
+# outputs/plots/
 
 # Jupyter
 .ipynb_checkpoints/
