@@ -1,25 +1,31 @@
-#  CellCare : Battery Degradation Prediction System
+<div align="center">
 
-*> An end-to-end machine learning system for predicting lithium-ion battery health, remaining useful life (RUL), and future capacity degradation using Random Forest, XGBoost, and LSTM models - served through a FastAPI backend and a React dashboard.*
+#  CellCare
+*Intelligent Battery Health Analytics*
 
-<br/>
-
-[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
-[![Framework](https://img.shields.io/badge/FastAPI-0.110-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-
+*An end-to-end machine learning ecosystem for predicting lithium-ion battery health, forecasting Remaining Useful Life (RUL), and tracking capacity degradation.*
 
 <br/>
 
-
-[Get Started](#quick-start) &nbsp;&bull;&nbsp;
-[How It Works](#how-it-works) &nbsp;&bull;&nbsp;
-[Contribute](#contributing) &nbsp;&bull;&nbsp;
-[Docs](docs/) &nbsp;&bull;&nbsp;
-[Issues](https://github.com/KaleSujit9011/CellCare/issues)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)](https://vitejs.dev/)
+<br/>
+[![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white)](https://pytorch.org/)
+[![scikit-learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
+[![XGBoost](https://img.shields.io/badge/XGBoost-%231E90FF.svg?style=for-the-badge&logo=XGBoost&logoColor=white)](https://xgboost.ai/)
+<br/>
+[![Vercel](https://img.shields.io/badge/Vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/)
+[![Render](https://img.shields.io/badge/Render-%2346E3B7.svg?style=for-the-badge&logo=render&logoColor=white)](https://render.com/)
 
 <br/>
 
----
+[**Live Demo**](https://cellcare-olive.vercel.app/) &nbsp; • &nbsp;
+[**Get Started**](#getting-started) &nbsp; • &nbsp;
+[**Architecture**](#architecture) &nbsp; • &nbsp;
+[**API Reference**](#api-reference) &nbsp; • &nbsp;
+[**Report Issue**](https://github.com/KaleSujit9011/Green-Skills-AI-Internship-Project/issues)
 
 </div>
 
@@ -74,16 +80,16 @@ The system is designed around the **NASA Battery Dataset (B0005)** and is split 
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                    React Frontend (Vite)                │
+│      React Frontend (Vite)  —  Deployed on Vercel       │
 │  ┌──────────────┐  ┌────────────────────┐  ┌──────────┐ │
 │  │  NavBar.jsx  │  │ HealthDashboard.jsx│  │Technical │ │
 │  └──────────────┘  │  FileUpload.jsx    │  │Dashboard │ │
 │                    └────────────────────┘  └──────────┘ │
 └─────────────────────────┬───────────────────────────────┘
-                          │ HTTP (Axios)
+                          │ HTTPS (Axios)
                           ▼
 ┌─────────────────────────────────────────────────────────┐
-│                FastAPI Backend (Uvicorn)                │
+│      FastAPI Backend (API)  —  Deployed on Render       │
 │   /predict   /predict_sequence   /predict_csv           │
 │   /predict_sequence_csv          /plots/{name}          │
 └────────────┬───────────────────────────────┬────────────┘
@@ -166,7 +172,19 @@ The system is designed around the **NASA Battery Dataset (B0005)** and is split 
 
 ---
 
-##  Getting Started
+##  Live Environment
+
+The project is fully deployed and accessible over the internet.
+
+- **Frontend (Web App):** Deployed serverlessly via [Vercel](https://cellcare-olive.vercel.app/)
+  - URL: `https://cellcare-olive.vercel.app/`
+- **Backend (REST API):** Hosted as a Web Service on [Render](https://cellcare-api.onrender.com)
+  - Base API URL: `https://cellcare-api.onrender.com`
+  - Swagger UI Documentation: `https://cellcare-api.onrender.com/docs`
+
+---
+
+##  Local Development Setup
 
 ### Prerequisites
 
@@ -244,6 +262,8 @@ The React app will be available at **http://localhost:5173**
 
 ##  API Reference
 
+The Live API is hosted at: `https://cellcare-api.onrender.com`
+
 | Method | Endpoint | Description |
 |---|---|---|
 | `GET` | `/health` | Health check — confirms the API is running |
@@ -280,9 +300,9 @@ The React app will be available at **http://localhost:5173**
 
 | Status | Capacity |
 |---|---|
-| ✅ Safe | ≥ 1.7 Ah |
-| ⚠️ Warning | 1.5 – 1.7 Ah |
-| 🚨 Dangerous | < 1.5 Ah |
+| ✅ Safe | ≥ 1.6 Ah |
+| ⚠️ Warning | 1.4 – 1.6 Ah |
+| 🚨 Dangerous | < 1.4 Ah |
 
 ### CSV File Format
 
