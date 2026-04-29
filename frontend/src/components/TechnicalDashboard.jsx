@@ -1,7 +1,7 @@
 import React from 'react'
 
 function TechnicalDashboard() {
-  const API_URL = 'http://localhost:8000'
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
   
   const plots = [
     { name: 'degradation_curve', title: 'Capacity Degradation Over Cycles' },

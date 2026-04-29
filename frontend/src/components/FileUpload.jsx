@@ -6,6 +6,8 @@ function FileUpload({setPredictionData}) {
   const [error, setError] = useState(null)
   const [selectedFile, setSelectedFile] = useState(null)
   
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+  
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0])
     setError(null)
@@ -24,13 +26,13 @@ function FileUpload({setPredictionData}) {
       const formData = new FormData()
       formData.append('file', selectedFile)
       
-      const singleResponse = await axios.post('http://localhost:8000/predict_csv', formData, {
+      const singleResponse = await axios.post(`${API_URL}/predict_csv`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
       
       setPredictionData(singleResponse.data)
       try {
-        const sequenceResponse = await axios.post('http://localhost:8000/predict_sequence_csv', formData, {
+        const sequenceResponse = await axios.post(`${API_URL}/predict_sequence_csv`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         })
         setPredictionData(prev => ({
@@ -61,7 +63,7 @@ function FileUpload({setPredictionData}) {
         min_voltage: 2.612467
       }
       
-      const response = await axios.post('http://localhost:8000/predict', sampleData)
+      const response = await axios.post(`${API_URL}/predict`, sampleData)
       setPredictionData(response.data)
     } catch (err) {
       setError('Failed to get prediction')

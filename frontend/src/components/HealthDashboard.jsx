@@ -4,6 +4,7 @@ import FileUpload from './FileUpload';
 
 function HealthDashboard({ predictionData, setPredictionData }) {
   const [sequencePrediction, setSequencePrediction] = useState(null)
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
   //LSTM endpoint
   const handleSequencePrediction = async () => {
     try {
@@ -21,7 +22,7 @@ function HealthDashboard({ predictionData, setPredictionData }) {
         { "C1": 0.000036, "C2": 0.010678, "C3": -0.765432, "C4": 91.987654, "min_voltage": 2.552854 }
       ]
 
-      const response = await axios.post('http://localhost:8000/predict_sequence', sampleSequence)
+      const response = await axios.post(`${API_URL}/predict_sequence`, sampleSequence)
       setSequencePrediction(response.data)
     } catch (err) {
       console.error('Sequence prediction failed:', err)
