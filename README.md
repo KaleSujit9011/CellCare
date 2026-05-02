@@ -62,6 +62,18 @@
 The system is designed around the **NASA Battery Dataset (B0005)** and is split into a Python/FastAPI backend and a React/Vite frontend dashboard.
 
 ---
+## Output Screenshots
+sample Input CSV File:
+### Health Dashboard
+<p align="center">
+  <img src="images/Health.png" width="600" />
+</p>
+
+### Technical Dashboard
+<p align="center">
+  <img src="images/Tech.png" width="600" />
+</p>
+
 
 ##  Features
 
